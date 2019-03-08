@@ -131,3 +131,4 @@ dmypy.json
 
 .vscode
 /static
+secret.py
