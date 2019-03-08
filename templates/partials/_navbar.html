@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{% url 'index' %}">
             <img src="{% static 'img/logo_name.png' %}" class="logo" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
@@ -10,21 +10,33 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav">
+
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="collections.html">Collections</a>
                 </li>
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="about.html">About</a>
-                </li>
+
+                <li 
+                    {% if 'about' in request.path %}
+                    class="nav-item active mr-3"
+                    {% else %}
+                    class="nav-item mr-3"
+                    {% endif %}
+                    >
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+              </li>
+
             </ul>
 
             <ul class="navbar-nav ml-auto">
+
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="register.html">Register</a>
                 </li>
+
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="login.html">Login</a>
                 </li>
+
             </ul>
         </div>
     </div>
