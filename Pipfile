@@ -10,6 +10,7 @@ pylint = "*"
 django = "*"
 psycopg2 = "*"
 psycopg2-binary = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
