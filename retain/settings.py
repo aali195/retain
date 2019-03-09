@@ -32,16 +32,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'pages.apps.PagesConfig',
-    'collecs.apps.CollecsConfig',
-    'statements.apps.StatementsConfig',
-    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'users.apps.UsersConfig',
+    'pages.apps.PagesConfig',
+    'collecs.apps.CollecsConfig',
+    'statements.apps.StatementsConfig',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'retain.wsgi.application'
 
+# Custom User Model
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
