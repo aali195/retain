@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'collecs.apps.CollecsConfig',
     'statements.apps.StatementsConfig',
     'subscriptions.apps.SubscriptionsConfig',
+    'progress.apps.ProgressConfig',
 ]
 
 MIDDLEWARE = [
