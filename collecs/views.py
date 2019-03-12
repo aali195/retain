@@ -3,7 +3,7 @@ from django.shortcuts import render
 from . import listings
 
 def index(request):
-    context = listings.collections()
+    context = listings.collections(request)
     return render(request, 'collecs/collections.html', context)
 
 def collection(request, collection_id):

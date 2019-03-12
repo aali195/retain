@@ -86,23 +86,39 @@
             <!-- Pagination -->
             <div class="row">
                 <div class="col-md-12">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#">&laquo;</a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">&raquo;</a>
-                        </li>
-                    </ul>
+                    {% if collections.has_other_pages %}
+                        <ul class="pagination">
+                            {% if collections.has_previous %}
+                                <li class="page-item">
+                                    <a href="?page={{collections.previous_page_number}}" class="page-link">&laquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&laquo;</a>
+                                </li>
+                            {% endif %}
+                            {% for i in collections.paginator.page_range %}
+                                {%if collections.number == i %}
+                                    <li class="page-item active">
+                                        <a class="page-link">{{i}}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a href="?page={{i}}" class="page-link">{{i}}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if collections.has_next %}
+                                <li class="page-item">
+                                    <a href="?page={{collections.next_page_number}}" class="page-link">&raquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&raquo;</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </div>
