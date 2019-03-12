@@ -51,73 +51,36 @@
         <div class="container">
             <h3 class="text-center mb-3">Featured Collections</h3>
             <div class="row">
-                
-                <!-- Listing 1 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card listing-preview">
-                        <img class="card-img-top" src="assets/img/collections/1/main.jpg" alt="">
-                        <div class="card-body">
-                            <div class="listing-heading text-center">
-                                <h4 class="text-primary">The Periodic Table</h4>
-                                <p>Short description that needs shortening</p>
-                            </div>
-                            <hr>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Created By: User1</div>
-                            </div>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Upload date: 20/10/18</div>
-                            </div>
-                            <hr>
-                            <a href="collection.html" class="btn btn-primary btn-block">More Info</a>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Listing 2 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card listing-preview">
-                        <img class="card-img-top" src="assets/img/collections/2/main.jpg" alt="">
-                        <div class="card-body">
-                            <div class="listing-heading text-center">
-                                <h4 class="text-primary">The Periodic Table</h4>
-                                <p>Short description that needs shortening</p>
+                <!-- Listing -->
+                {% if collections %}
+                    {% for collection in collections %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card listing-preview">
+                                <img class="card-img-top" src="assets/img/collections/1/main.jpg" alt="">
+                                <div class="card-body">
+                                    <div class="listing-heading text-center">
+                                        <h4 class="text-primary">The Periodic Table</h4>
+                                        <p>Short description that needs shortening</p>
+                                    </div>
+                                    <hr>
+                                    <div class="row py-2 text-secondary">
+                                        <div class="col-8">Created By: User1</div>
+                                    </div>
+                                    <div class="row py-2 text-secondary">
+                                        <div class="col-8">Upload date: 20/10/18</div>
+                                    </div>
+                                    <hr>
+                                    <a href="collection.html" class="btn btn-primary btn-block">More Info</a>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Created By: User1</div>
-                            </div>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Upload date: 20/10/18</div>
-                            </div>
-                            <hr>
-                            <a href="collection.html" class="btn btn-primary btn-block">More Info</a>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-md-12">
+                      <p>No Collection Available</p>
                     </div>
-                </div>
-
-                <!-- Listing 3 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card listing-preview">
-                        <img class="card-img-top" src="assets/img/collections/3/main.jpg" alt="">
-                        <div class="card-body">
-                            <div class="listing-heading text-center">
-                                <h4 class="text-primary">The Periodic Table</h4>
-                                <p>Short description that needs shortening</p>
-                            </div>
-                            <hr>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Created By: User1</div>
-                            </div>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Upload date: 20/10/18</div>
-                            </div>
-                            <hr>
-                            <a href="collection.html" class="btn btn-primary btn-block">More Info</a>
-                        </div>
-                    </div>
-                </div>
-
+                {% endif %}
             </div>
 
             <!-- Pagination -->
