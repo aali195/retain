@@ -1,9 +1,9 @@
 from django.shortcuts import render
 
-from . import listings
+from .listings import list_collections
 
 def index(request):
-    context = listings.collections(request)
+    context = list_collections(request)
     return render(request, 'collecs/collections.html', context)
 
 def collection(request, collection_id):
