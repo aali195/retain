@@ -57,21 +57,21 @@
                     {% for collection in collections %}
                         <div class="col-md-6 col-lg-4 mb-4">
                             <div class="card listing-preview">
-                                <img class="card-img-top" src="assets/img/collections/1/main.jpg" alt="">
+                                <img class="card-img-top" src="{{collection.image.url}}" alt="">
                                 <div class="card-body">
                                     <div class="listing-heading text-center">
-                                        <h4 class="text-primary">The Periodic Table</h4>
-                                        <p>Short description that needs shortening</p>
+                                        <h4 class="text-primary">{{collection.title}}</h4>
+                                        <p></p>
                                     </div>
                                     <hr>
                                     <div class="row py-2 text-secondary">
-                                        <div class="col-8">Created By: User1</div>
+                                        <div class="col-8">Created By: {{collection.creator}}</div>
                                     </div>
                                     <div class="row py-2 text-secondary">
-                                        <div class="col-8">Upload date: 20/10/18</div>
+                                        <div class="col-8">Upload date: {{collection.upload_date}}</div>
                                     </div>
                                     <hr>
-                                    <a href="collection.html" class="btn btn-primary btn-block">More Info</a>
+                                    <a href="{% url 'collection' collection.id %}" class="btn btn-primary btn-block">More Info</a>
                                 </div>
                             </div>
                         </div>

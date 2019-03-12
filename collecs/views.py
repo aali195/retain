@@ -6,7 +6,7 @@ def index(request):
     context = listings.collections()
     return render(request, 'collecs/collections.html', context)
 
-def collection(request):
+def collection(request, collection_id):
     return render(request, 'collecs/collection.html')
 
 def search(request):
