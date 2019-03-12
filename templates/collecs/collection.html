@@ -2,63 +2,35 @@
 
 {% block content %}
 
-    <!-- Search -->
-    <section id="showcase-inner" class="showcase-search text-white py-4">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-md-12">
-                    <form action="search.html">
-                        <h1 class="display-5">Search Collections</h1>
-                        <p class="lead text-left">Use keywords to search for collections</p>
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <label class="sr-only">Keywords</label>
-                                <input type="text" name="keywords" class="form-control" placeholder="Keyword (Chemistry, Spanish, etc)">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="sr-only">State</label>
-                                <select name="sorting" class="form-control">
-                                    <option selected="true">Rating</option>
-                                    <option value="latest">Latest</option>
-                                    <option value="title">Title</option>
-                                    <option value="creator">Creator</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary btn-block mt-4" type="submit">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% include 'partials/_search.html' %}
 
     <!-- Breadcrumb -->
     <section id="bc" class="mt-3">
-        <div class="container">
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="collections.html">Collections</a>
-                    </li>
-                    <li class="breadcrumb-item active">The Periodic Table</li>
-                </ol>
-            </nav>
-        </div>
-    </section>
+            <div class="container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'index' %}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'collections' %}">Browse Collections</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{collection.title}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </section>
 
     <!-- Listing -->
     <section id="listing" class="py-4">
         <div class="container">
-            <a href="listings.html" class="btn btn-light mb-4">Back To Collections</a>
+            <a href="{% url 'collections' %}" class="btn btn-light mb-4">Back To Collections</a>
             <div class="row">
                 <div class="col-md-4">
                     <div class="card mb-4">
-                        <img class="card-img-top" src="assets/img/collections/1/main.jpg" alt="Collection Image">
+                        <img class="card-img-top" src="{{collection.image.url}}" alt="Collection Image">
                         <div class="card-body">
-                            <h5 class="card-title">The Periodic Table</h5>
+                            <h5 class="card-title">{{collection.title}}</h5>
                             <h6 class="text-secondary">RATING</h6>
                         </div>
                     </div>
@@ -72,11 +44,11 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item text-secondary">
                                     Creator:
-                                    <span class="float-right">testperson</span>
+                                    <span class="float-right">{{collection.creator}}</span>
                                 </li>
                                 <li class="list-group-item text-secondary">
                                     Last Updated:
-                                    <span class="float-right">20/04/2018</span>
+                                    <span class="float-right">{{collection.last_update}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -84,11 +56,11 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item text-secondary">
                                     Upload Date:
-                                    <span class="float-right">20/04/2018</span>
+                                    <span class="float-right">{{collection.upload_date}}</span>
                                 </li>
                                 <li class="list-group-item text-secondary">
-                                    Statements:
-                                    <span class="float-right">118</span>
+                                    Content:
+                                    <span class="float-right">{{collection.size}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -97,17 +69,7 @@
                     <!-- Description -->
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
-                            This is a test collection for the periodic table.
+                            {{collection.description}}
                         </div>
                     </div>
                 </div>
