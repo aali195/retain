@@ -2,35 +2,7 @@
 
 {% block content %}
 
-    <!-- Search -->
-    <section id="showcase-inner" class="showcase-search text-white py-4">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-md-12">
-                    <form action="search.html">
-                        <h1 class="display-5">Search Collections</h1>
-                        <p class="lead text-left">Use keywords to search for collections</p>
-                        <div class="form-row">
-                            <div class="col-md-8">
-                                <label class="sr-only">Keywords</label>
-                                <input type="text" name="keywords" class="form-control" placeholder="Keyword (Chemistry, Spanish, etc)">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="sr-only">State</label>
-                                <select name="sorting" class="form-control">
-                                    <option selected="true">Rating</option>
-                                    <option value="latest">Latest</option>
-                                    <option value="title">Title</option>
-                                    <option value="creator">Creator</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button class="btn btn-secondary btn-block mt-4" type="submit">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% include 'partials/_search.html' %}
 
     <!-- Breadcrumb -->
     <section id="bc" class="mt-3">
