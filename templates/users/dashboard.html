@@ -1,1 +1,96 @@
-<h1>dashboard</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Title -->
+    <section id="showcase-inner" class="py-4 text-white">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <h1 class="display-4">User Dashboard</h1>
+                    <p class="lead">Manage your learning experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Breadcrumb -->
+    <section id="bc" class="mt-3">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active"> Dashboard</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+    
+    <!-- Dashboard -->
+    <section id="dashboard" class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 py-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">The Periodic Table</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5>Completed: 5/118 </h5>
+                                    <h5>Last reviewed: 20/12/18 </h5>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <img src="assets/img/collections/1/main.jpg" alt="" class="img-main img-fluid">
+                                    <a href="#" class="btn text-white btn-primary">REVIEW</a>
+                                    <a href="#" class="btn text-white btn-primary">LEARN</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 py-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">My Created Collections</h5>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td><a href="#" class="card-link">English Vocab pt1</a></td>
+                                        <td><a class="btn btn-secondary" href="#">Edit</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="card-link">English Vocab pt2</a></td>
+                                        <td><a class="btn btn-secondary" href="#">Edit</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 py-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">My Added Collections</h5>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td><a href="#" class="card-link">English Vocab pt1</a></td>
+                                        <td>5/100</td>
+                                        <td><a class="btn btn-secondary" href="#">Activate</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" class="card-link">English Vocab pt2</a></td>
+                                        <td>5/100</td>
+                                        <td><a class="btn btn-secondary" href="#">Activate</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
