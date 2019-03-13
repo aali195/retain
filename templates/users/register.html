@@ -10,7 +10,12 @@
                             <h4>Register</h4>
                         </div>
                         <div class="card-body">
+                            <!-- Alerts -->
+                            {% include 'partials/_alerts.html' %}
+
+                            <!-- Registeration -->
                             <form action="{% url 'register' %}" method="POST">
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <label for="username">Username</label>
                                     <input type="text" name="username" class="form-control" required>
@@ -29,6 +34,7 @@
                                 </div>
                                 <input type="submit" value="Register" class="btn btn-secondary btn-block">
                             </form>
+                            
                         </div>
                     </div>
                 </div>
