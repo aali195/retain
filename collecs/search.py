@@ -11,7 +11,8 @@ def search_collections(request):
 
     context = {
         'keywords': keywords,
-        'collections': queryset_list
+        'collections': queryset_list,
+        'values': request.GET
     }
     return context
 
