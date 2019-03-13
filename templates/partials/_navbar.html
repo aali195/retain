@@ -13,35 +13,42 @@
 
                 <li 
                     {% if 'collections' in request.path %}
-                    class="nav-item active mr-3"
+                        class="nav-item active mr-3">
                     {% else %}
-                    class="nav-item mr-3"
+                        class="nav-item mr-3">
                     {% endif %}
-                    >
-                        <a class="nav-link" href="{% url 'collections' %}">Collections</a>
+                            <a class="nav-link" href="{% url 'collections' %}">Collections</a>
               </li>
 
                 <li 
                     {% if 'about' in request.path %}
-                    class="nav-item active mr-3"
+                        class="nav-item active mr-3">
                     {% else %}
-                    class="nav-item mr-3"
+                        class="nav-item mr-3">
                     {% endif %}
-                    >
-                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                            <a class="nav-link" href="{% url 'about' %}">About</a>
               </li>
 
             </ul>
 
             <ul class="navbar-nav ml-auto">
+                <li 
+                    {% if 'register' in request.path %}
+                        class="nav-item active mr-3">
+                    {% else %}
+                        class="nav-item mr-3">
+                    {% endif %}
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+              </li>
 
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="register.html">Register</a>
-                </li>
-
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="login.html">Login</a>
-                </li>
+              <li 
+                    {% if 'login' in request.path %}
+                        class="nav-item active mr-3">
+                    {% else %}
+                        class="nav-item mr-3">
+                    {% endif %}
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
 
             </ul>
         </div>
