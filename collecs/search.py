@@ -8,7 +8,7 @@ def search_collections(request):
         keywords = request.GET['keywords']
         if keywords:
             queryset_list = queryset_list.filter(title__icontains=keywords)
-
+            
     context = {
         'keywords': keywords,
         'collections': queryset_list,
@@ -18,7 +18,11 @@ def search_collections(request):
 
 
 def order_collections(request):
-    criteria = item_dict(request.GET['sorting'])
+    if 'sorting' not in request.GET:
+        criteria = 'rating'
+    else:
+        criteria = item_dict(request.GET['sorting'])
+    
     ordered_list = Collection.objects.order_by(criteria)
     return ordered_list
 
