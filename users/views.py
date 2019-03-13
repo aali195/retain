@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from .registeration import register_user
+from .login import login_user
 
 def register(request):
     if request.method == 'POST':
@@ -17,8 +18,13 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        # Login User
-        return
+        login_status = login_user(request)
+        if login_status != 1:
+            messages.error(request, 'Invalid credentials')
+            return redirect('login')
+        else:
+            messages.success(request, 'You are now logged in')
+            return redirect('dashboard')
     else:
         return render(request, 'users/login.html')
 
