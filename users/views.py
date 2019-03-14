@@ -3,6 +3,7 @@ from django.contrib import messages
 
 from .registeration import register_user
 from .login import login_user
+from .logout import logout_user
 
 def register(request):
     if request.method == 'POST':
@@ -29,6 +30,8 @@ def login(request):
         return render(request, 'users/login.html')
 
 def logout(request):
+    logout_user(request)
+    messages.success(request, 'You are now logged out')
     return redirect('index')
 
 def dashboard(request):

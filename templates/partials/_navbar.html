@@ -9,8 +9,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            
             <ul class="navbar-nav">
-
                 <li 
                     {% if 'collections' in request.path %}
                         class="nav-item active mr-3">
@@ -18,8 +18,7 @@
                         class="nav-item mr-3">
                     {% endif %}
                             <a class="nav-link" href="{% url 'collections' %}">Collections</a>
-              </li>
-
+                </li>
                 <li 
                     {% if 'about' in request.path %}
                         class="nav-item active mr-3">
@@ -27,29 +26,42 @@
                         class="nav-item mr-3">
                     {% endif %}
                             <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
-
+                </li>
             </ul>
 
-            <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav ml-auto">
+                    <li 
+                        {% if 'dashboard' in request.path %}
+                            class="nav-item active mr-3">
+                        {% else %}
+                            class="nav-item mr-3">
+                        {% endif %}
+                                <a class="nav-link" href="{% url 'dashboard' %}">{{ user.username }}'s Dashboard</a>
+                    </li> 
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                </li>
+            {% else %}
+                <ul class="navbar-nav ml-auto">
+                    <li 
+                        {% if 'register' in request.path %}
+                            class="nav-item active mr-3">
+                        {% else %}
+                            class="nav-item mr-3">
+                        {% endif %}
+                                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
                 <li 
-                    {% if 'register' in request.path %}
-                        class="nav-item active mr-3">
-                    {% else %}
-                        class="nav-item mr-3">
-                    {% endif %}
-                            <a class="nav-link" href="{% url 'register' %}">Register</a>
-              </li>
-
-              <li 
-                    {% if 'login' in request.path %}
-                        class="nav-item active mr-3">
-                    {% else %}
-                        class="nav-item mr-3">
-                    {% endif %}
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-              </li>
-
+                        {% if 'login' in request.path %}
+                            class="nav-item active mr-3">
+                        {% else %}
+                            class="nav-item mr-3">
+                        {% endif %}
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
