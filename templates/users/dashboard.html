@@ -19,13 +19,14 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="index.html">Home</a>
+                        <a href="{% url 'index' %}">Home</a>
                     </li>
                     <li class="breadcrumb-item active"> Dashboard</li>
                 </ol>
             </nav>
         </div>
     </section>
+
     <section id="dashboard" class="py-4">
         <div class="container">
             <!-- Alerts -->
@@ -57,14 +58,16 @@
                             <h5 class="card-title">My Created Collections</h5>
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <td><a href="#" class="card-link">English Vocab pt1</a></td>
-                                        <td><a class="btn btn-secondary" href="#">Edit</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="card-link">English Vocab pt2</a></td>
-                                        <td><a class="btn btn-secondary" href="#">Edit</a></td>
-                                    </tr>
+                                    {% if created %}
+                                        {% for collection in created %}
+                                            <tr>
+                                                <td><a href="#" class="card-link">{{collection.title}}</a></td>
+                                                <td><a class="btn btn-secondary" href="#">Edit</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>You have no created any collections.</p>
+                                    {% endif %}
                                 </tbody>
                             </table>
                         </div>
@@ -76,16 +79,17 @@
                             <h5 class="card-title">My Added Collections</h5>
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <td><a href="#" class="card-link">English Vocab pt1</a></td>
-                                        <td>5/100</td>
-                                        <td><a class="btn btn-secondary" href="#">Activate</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="card-link">English Vocab pt2</a></td>
-                                        <td>5/100</td>
-                                        <td><a class="btn btn-secondary" href="#">Activate</a></td>
-                                    </tr>
+                                    {% if subbed %}
+                                        {% for collection in subbed %}
+                                            <tr>
+                                                <td><a href="#" class="card-link">{{collection.title}}</a></td>
+                                                <td>5/100</td>
+                                                <td><a class="btn btn-secondary" href="#">Activate</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>You have not subscribed to any collections.</p>
+                                    {% endif %}
                                 </tbody>
                             </table>
                         </div>

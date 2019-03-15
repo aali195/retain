@@ -4,6 +4,7 @@ from django.contrib import messages
 from .registeration import register_user
 from .login import login_user
 from .logout import logout_user
+from .dashboard import user_details
 
 def register(request):
     if request.method == 'POST':
@@ -35,4 +36,5 @@ def logout(request):
     return redirect('index')
 
 def dashboard(request):
-    return render(request, 'users/dashboard.html')
+    context = user_details(request)
+    return render(request, 'users/dashboard.html', context)
