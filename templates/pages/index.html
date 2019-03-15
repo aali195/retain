@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 
     <!-- Jumbotron -->
@@ -15,8 +17,8 @@
                         <a class="btn btn-primary btn-lg" href="#" role="button">Get Started</a>
                     </p>
                 </div>
-                <div class="col-md-4">
-                    <img class="" src="assets/img/logo_bw_small.png" alt="">
+                <div class="col-md-4 d-none d-md-block">
+                    <img class="img-fluid" src="{% static 'img/logo_bw_small.png' %}" alt="">
                 </div>
             </div>
         </div>
@@ -31,79 +33,89 @@
             <h3 class="text-center mb-3">Featured Collections</h3>
             <div class="row">
                 
-                <!-- Listing 1 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card listing-preview">
-                        <img class="card-img-top" src="assets/img/collections/1/main.jpg" alt="">
-                        <div class="card-body">
-                            <div class="listing-heading text-center">
-                                <h4 class="text-primary">The Periodic Table</h4>
-                                <p>Short description that needs shortening</p>
+                <!-- Listing -->
+                {% if collections %}
+                    {% for collection in collections %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card listing-preview">
+                                <img class="card-img-top" src="{{collection.image.url}}" alt="">
+                                <div class="card-body">
+                                    <div class="listing-heading text-center">
+                                        <h4 class="text-primary">{{collection.title}}</h4>
+                                        <p></p>
+                                    </div>
+                                    <hr>
+                                    <div class="row py-2 text-secondary">
+                                        <div class="col-8">Created By: {{collection.creator}}</div>
+                                    </div>
+                                    <div class="row py-2 text-secondary">
+                                        <div class="col-8">Upload date: {{collection.upload_date}}</div>
+                                    </div>
+                                    <hr>
+                                    <a href="{% url 'collection' collection.id %}" class="btn btn-primary btn-block">More Info</a>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Created By: User1</div>
-                            </div>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Upload date: 20/10/18</div>
-                            </div>
-                            <hr>
-                            <a href="collection.html" class="btn btn-primary btn-block">More Info</a>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-md-12">
+                      <p>No Collection Available</p>
                     </div>
-                </div>
-
-                <!-- Listing 2 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card listing-preview">
-                        <img class="card-img-top" src="assets/img/collections/2/main.jpg" alt="">
-                        <div class="card-body">
-                            <div class="listing-heading text-center">
-                                <h4 class="text-primary">The Periodic Table</h4>
-                                <p>Short description that needs shortening</p>
-                            </div>
-                            <hr>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Created By: User1</div>
-                            </div>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Upload date: 20/10/18</div>
-                            </div>
-                            <hr>
-                            <a href="collection.html" class="btn btn-primary btn-block">More Info</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Listing 3 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card listing-preview">
-                        <img class="card-img-top" src="assets/img/collections/3/main.jpg" alt="">
-                        <div class="card-body">
-                            <div class="listing-heading text-center">
-                                <h4 class="text-primary">The Periodic Table</h4>
-                                <p>Short description that needs shortening</p>
-                            </div>
-                            <hr>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Created By: User1</div>
-                            </div>
-                            <div class="row py-2 text-secondary">
-                                <div class="col-8">Upload date: 20/10/18</div>
-                            </div>
-                            <hr>
-                            <a href="collection.html" class="btn btn-primary btn-block">More Info</a>
-                        </div>
-                    </div>
-                </div>
+                {% endif %}
+            </div>
 
             </div>
         </div>
     
         <!-- View More -->
         <div class="container text-center">
-            <a class="nav-link" href="collections.html">View More</a>
+            <a class="nav-link" href="{% url 'collections' %}">View More</a>
         </div>
+    </section>
+
+    <!-- Process -->
+    <section id="team" class="py-5">
+        <div class="container">
+            <h2 class="text-center">The Process</h2>
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <img src="assets/img/realtors/kyle.jpg" alt="" class="mb-2">
+                    <h4>Subscribe</h4>
+                    <hr>
+                    <p>Choose from user created collections or create your own.</p>
+                </div>
+
+                <div class="col-md-3">
+                    <img src="assets/img/realtors/kyle.jpg" alt="" class="mb-2">
+                    <h4>Learn</h4>
+                    <hr>
+                    <p>Activate a collection and begin learning its contents in sessions.</p>
+                </div>
+
+                <div class="col-md-3">
+                    <img src="assets/img/realtors/kyle.jpg" alt="" class="mb-2">
+                    <h4>Review</h4>
+                    <hr>
+                    <p>Keep reviewing what you have already learned to retain it.</p>
+                </div>
+
+                <div class="col-md-3">
+                    <img src="assets/img/realtors/kyle.jpg" alt="" class="mb-2">
+                    <h4>Try an Extension</h4>
+                    <hr>
+                    <p>Integrate the reviewing process into your life using one of the extensions provided.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Extensible -->
+    <section id="work" class="bg-dark text-white text-center">
+        <h2 class="display-4">Extensible</h2>
+        <h4>Developed with support for extensions in mind to allow for easier integration into the user's life</h4>
+        <hr>
+        <a href="#" class="btn btn-secondary text-white btn-lg">Browser Extension</a>
+        <a href="#" class="btn btn-secondary text-white btn-lg">Android App</a>
     </section>
 
 {% endblock %}

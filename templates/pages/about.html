@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 
     <!-- Breadcrumb -->
@@ -8,7 +10,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="index.html">Home</a>
+                        <a href="{% url 'index' %}">Home</a>
                     </li>
                     <li class="breadcrumb-item active"> About</li>
                 </ol>
@@ -19,70 +21,27 @@
     <!-- About -->
     <section id="about" class="py-4">
         <div class="container">
+            <h2>About Retain</h2>
+            <p class="lead">
+                A platform to help users memorise statements.
+            </p>
             <div class="row">
-                <div class="col-md-12">
-                    <h2>About Retain</h2>
-                    <p class="lead">
-                        A platform to help users memorise statements.
-                    </p>
-                    <img src="assets/img/about.jpg" alt="">
+                <div class="col-md-8">
                     <p class="mt-4">
                         Created with extension support in mind, this is a project that I worked on for my final 
-                        undergraduate year to help me get the hang of technologies surrouding web development. As a fan of 
+                        undergraduate year to help me get the hang web development technologies. As a fan of 
                         spaced repetition learning but as someone who is generally lazy, I decided to build a platform that 
                         allows for forcing the user to stick to revising what they learn and this is the outcome.
                     </p>
                     <p class="mt-4">
-                        Full source code can be found on GitHub.
+                        <a href="https://github.com/aali195/retain">Full source code can be found on GitHub here.</a>
                     </p>
                 </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Process -->
-    <section id="team" class="py-5">
-        <div class="container">
-            <h2 class="text-center">The Process</h2>
-            <div class="row text-center">
-                <div class="col-md-3">
-                    <img src="assets/img/realtors/kyle.jpg" alt="" class="mb-2">
-                    <h4>Choose a Collection</h4>
-                    <hr>
-                    <p>Choose from user created collections or create your own.</p>
-                </div>
-
-                <div class="col-md-3">
-                    <img src="assets/img/realtors/kyle.jpg" alt="" class="mb-2">
-                    <h4>Learn Statements</h4>
-                    <hr>
-                    <p>Activate a collection and begin learning its contents in sessions.</p>
-                </div>
-
-                <div class="col-md-3">
-                    <img src="assets/img/realtors/kyle.jpg" alt="" class="mb-2">
-                    <h4>Review Statements</h4>
-                    <hr>
-                    <p>Keep reviewing what you have already learned to retain it.</p>
-                </div>
-
-                <div class="col-md-3">
-                    <img src="assets/img/realtors/kyle.jpg" alt="" class="mb-2">
-                    <h4>Grab an Extension</h4>
-                    <hr>
-                    <p>Integrate the reviewing process into your life using one of the extensions provided.</p>
+                <div class="col-md-4">
+                    <img class="img-fluid" src="{% static 'img/logo_tr_small.png' %}" alt="">
                 </div>
             </div>
         </div>
-    </section>
-    
-    <!-- Extensible -->
-    <section id="work" class="bg-dark text-white text-center">
-        <h2 class="display-4">Extensible</h2>
-        <h4>Developed with support for extensions in mind to allow for easier integration into the user's life</h4>
-        <hr>
-        <a href="#" class="btn btn-secondary text-white btn-lg">Browser Extension</a>
-        <a href="#" class="btn btn-secondary text-white btn-lg">Android App</a>
     </section>
 
 {% endblock %}
