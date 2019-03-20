@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def learn(request):
+    return render(request, 'progress/learn.html')
+
+def review(request):
+    return render(request, 'progress/review.html')
