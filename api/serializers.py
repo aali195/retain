@@ -8,7 +8,8 @@ class CollectionSerializer(serializers.ModelSerializer):
         model = Collection
         fields = (
             'id',
-            'title', 
+            'title',
+            'creator',
             'image', 
             'description', 
             'size', 
