@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
     
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
@@ -46,6 +48,8 @@ INSTALLED_APPS = [
     'statements.apps.StatementsConfig',
     'subscriptions.apps.SubscriptionsConfig',
     'progress.apps.ProgressConfig',
+
+    'api,'
 ]
 
 MIDDLEWARE = [
@@ -80,6 +84,13 @@ WSGI_APPLICATION = 'retain.wsgi.application'
 
 # Custom User Model
 AUTH_USER_MODEL = 'users.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
+    ],
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
