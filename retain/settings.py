@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
     
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
@@ -49,7 +50,7 @@ INSTALLED_APPS = [
     'subscriptions.apps.SubscriptionsConfig',
     'progress.apps.ProgressConfig',
 
-    'api,'
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -86,6 +87,9 @@ WSGI_APPLICATION = 'retain.wsgi.application'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication'
