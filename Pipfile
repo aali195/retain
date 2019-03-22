@@ -12,6 +12,7 @@ psycopg2 = "*"
 psycopg2-binary = "*"
 pillow = "*"
 djangorestframework = "*"
+django-rest-auth = "*"
 
 [requires]
 python_version = "3.7"
