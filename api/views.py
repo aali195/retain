@@ -9,6 +9,7 @@ class ListCollectionsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
+    http_method_names = ['get']
 
     def get(self, request):
         collection = self.get_queryset()
