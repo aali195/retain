@@ -3,9 +3,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
 
-from .serializers import CollectionSerializer, StatementSerializer
+from .serializers import CollectionSerializer, StatementSerializer, UserSettingsSerializer
 from collecs.models import Collection
 from statements.models import Statement
+from usersettings.models import UserSettings
 
 class ListCollectionsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
@@ -31,3 +32,12 @@ class GetStatementsView(viewsets.ModelViewSet):
             return statement
         else:
             raise NotFound(detail="Not found.", code=404)
+
+class GetUserSettingsView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSettingsSerializer
+    http_method_names = ['get']
+
+    def get_queryset(self):
+        return UserSettings.objects.filter(user=self.request.user)
+        
