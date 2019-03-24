@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'statements.apps.StatementsConfig',
     'subscriptions.apps.SubscriptionsConfig',
     'progress.apps.ProgressConfig',
+    'usersettings.apps.UsersettingsConfig',
 
     'api',
 ]
