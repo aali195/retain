@@ -27,6 +27,7 @@ urlpatterns = [
     path('progress/', include('progress.urls')),
     path('api/', include('rest_framework.urls')),
     path('api/v1/', include(router.urls)),
+    path('api/v1/', include('api.urls')),
     path('api/v1/auth/', include('rest_auth.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

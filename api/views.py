@@ -1,7 +1,8 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
+from django.shortcuts import get_object_or_404
 
 from .serializers import CollectionSerializer, StatementSerializer, UserSettingsSerializer
 from collecs.models import Collection
@@ -33,11 +34,17 @@ class GetStatementsView(viewsets.ModelViewSet):
         else:
             raise NotFound(detail="Not found.", code=404)
 
-class GetUserSettingsView(viewsets.ModelViewSet):
+class UserSettingsView(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSettingsSerializer
-    http_method_names = ['get']
 
     def get_queryset(self):
         return UserSettings.objects.filter(user=self.request.user)
-        
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset)
+        return obj
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)

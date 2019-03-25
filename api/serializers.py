@@ -36,8 +36,14 @@ class UserSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserSettings
         fields = (
-            'id',
             'user',
             'active_collection',
             'review_num',
         )
+        read_only_fields = ('user',)
+
+        def update(self, instance, validated_data):
+            instance.active_collection = validated_data.get('active_collection', instance.active_collection)
+            instance.review_num(validated_data.get('review_num', instance.review_num))
+            instance.save()
+            return instance
