@@ -37,13 +37,13 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         model = UserSettings
         fields = (
             'user',
-            'active_collection',
+            'active_sub',
             'review_num',
         )
         read_only_fields = ('user',)
 
         def update(self, instance, validated_data):
-            instance.active_collection = validated_data.get('active_collection', instance.active_collection)
+            instance.active_sub = validated_data.get('active_sub', instance.active_sub)
             instance.review_num(validated_data.get('review_num', instance.review_num))
             instance.save()
             return instance
