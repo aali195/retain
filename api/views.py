@@ -52,6 +52,9 @@ class UserSettingsView(generics.RetrieveUpdateAPIView):
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
+    def patch(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
 class UserSubscriptionsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSubscriptionsSerializer
@@ -60,4 +63,5 @@ class UserSubscriptionsView(viewsets.ModelViewSet):
         return Subscription.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user)

@@ -39,16 +39,17 @@ class UserSettingsSerializer(serializers.ModelSerializer):
         model = UserSettings
         fields = (
             'user',
-            'active_sub',
+            'active_collection',
             'review_num',
         )
         read_only_fields = ('user',)
 
-        def update(self, instance, validated_data):
-            instance.active_sub = validated_data.get('active_sub', instance.active_sub)
-            instance.review_num(validated_data.get('review_num', instance.review_num))
-            instance.save()
-            return instance
+    def validate(self, data):
+        data = super(UserSettingsSerializer, self).validate(data)
+        collection = data['active_collection']
+        if not Subscription.objects.filter(user=self.context['request'].user, collection=collection).exists():
+            raise serializers.ValidationError("User not subscribed to collection")
+        return data
 
 
 class UserSubscriptionsSerializer(serializers.ModelSerializer):
@@ -62,3 +63,10 @@ class UserSubscriptionsSerializer(serializers.ModelSerializer):
             'rating',
         )
         read_only_fields = ('user', 'sub_date', 'completed_count', 'rating')
+    
+    def validate(self, data):
+        data = super(UserSubscriptionsSerializer, self).validate(data)
+        collection = data['collection']
+        if not Subscription.objects.filter(user=self.context['request'].user, collection=collection).exists():
+            return data
+        raise serializers.ValidationError("Duplicate subscription")
