@@ -10,3 +10,6 @@ class Subscription(models.Model):
     sub_date = models.DateTimeField(default=datetime.now)
     completed_count = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ["user", "collection"]
