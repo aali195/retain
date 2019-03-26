@@ -11,5 +11,8 @@ class Subscription(models.Model):
     completed_count = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.collection.title
+
     class Meta:
         unique_together = ["user", "collection"]
