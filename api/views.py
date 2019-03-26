@@ -24,10 +24,9 @@ class ListCollectionsView(viewsets.ModelViewSet):
         return Response(serializer.data)
         
 
-class GetStatementsView(viewsets.ModelViewSet):
+class StatementsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = StatementSerializer
-    http_method_names = ['get']
 
     def get_queryset(self):
         collection_id = self.kwargs['collection_id']
@@ -36,6 +35,10 @@ class GetStatementsView(viewsets.ModelViewSet):
             return statement
         else:
             raise NotFound(detail="Not found.", code=404)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class UserSettingsView(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
@@ -54,6 +57,7 @@ class UserSettingsView(generics.RetrieveUpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
 
 class UserSubscriptionsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)

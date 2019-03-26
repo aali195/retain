@@ -18,7 +18,20 @@ class StatementSerializer(serializers.ModelSerializer):
             'question', 
             'answer',
         )
+        read_only_fields = ('id', 'image',)
+
+    def validate(self, data):
+        data = super(StatementSerializer, self).validate(data)
+        collection = data['collection']
+        if not Collection.objects.filter(creator=self.context['request'].user, id=collection.id).exists():
+            raise serializers.ValidationError("User not collection creator")
+        return data
+
+    def create(self, validated_data):
+        validated_data.pop('user', None)
+        return Statement.objects.create(**validated_data)
     
+
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
@@ -33,6 +46,7 @@ class CollectionSerializer(serializers.ModelSerializer):
             'last_update',
             'rating',
         )
+
 
 class UserSettingsSerializer(serializers.ModelSerializer):
     class Meta:
