@@ -5,12 +5,17 @@ from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 
 from .serializers import (
-    CollectionSerializer, StatementSerializer, UserSettingsSerializer, UserSubscriptionsSerializer
+    CollectionSerializer, 
+    StatementSerializer, 
+    UserSettingsSerializer, 
+    UserSubscriptionsSerializer,
+    CreatedCollectionSerializer
 )
 from collecs.models import Collection
 from statements.models import Statement
 from usersettings.models import UserSettings
 from subscriptions.models import Subscription
+
 
 class ListCollectionsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
@@ -22,7 +27,16 @@ class ListCollectionsView(viewsets.ModelViewSet):
         collection = self.get_queryset()
         serializer = self.get_serializer_class()(collection)
         return Response(serializer.data)
-        
+
+
+class CreatedCollectionsView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CollectionSerializer
+    http_method_names = ['get']
+    
+    def get_queryset(self):
+        return Collection.objects.filter(creator=self.request.user)
+   
 
 class StatementsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)

@@ -47,6 +47,21 @@ class CollectionSerializer(serializers.ModelSerializer):
             'rating',
         )
 
+class CreatedCollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collection
+        fields = (
+            'id',
+            'title',
+            'creator',
+            'image', 
+            'description', 
+            'size', 
+            'upload_date',
+            'last_update',
+            'rating',
+        )
+
 
 class UserSettingsSerializer(serializers.ModelSerializer):
     class Meta:
