@@ -1,8 +1,10 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from collecs.models import Collection
 from statements.models import Statement
 from usersettings.models import UserSettings
+from subscriptions.models import Subscription
 
 
 class StatementSerializer(serializers.ModelSerializer):
@@ -47,3 +49,16 @@ class UserSettingsSerializer(serializers.ModelSerializer):
             instance.review_num(validated_data.get('review_num', instance.review_num))
             instance.save()
             return instance
+
+
+class UserSubscriptionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = (
+            'user',
+            'collection',
+            'sub_date',
+            'completed_count',
+            'rating',
+        )
+        read_only_fields = ('user', 'sub_date', 'completed_count', 'rating')

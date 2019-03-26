@@ -4,10 +4,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 
-from .serializers import CollectionSerializer, StatementSerializer, UserSettingsSerializer
+from .serializers import (
+    CollectionSerializer, StatementSerializer, UserSettingsSerializer, UserSubscriptionsSerializer
+)
 from collecs.models import Collection
 from statements.models import Statement
 from usersettings.models import UserSettings
+from subscriptions.models import Subscription
 
 class ListCollectionsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
@@ -48,3 +51,13 @@ class UserSettingsView(generics.RetrieveUpdateAPIView):
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+class UserSubscriptionsView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSubscriptionsSerializer
+
+    def get_queryset(self):
+        return Subscription.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
