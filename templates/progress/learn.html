@@ -4,28 +4,38 @@
 
 {% block content %}
     <!-- Title -->
-    <section id="showcase-session" class="py-4 text-white">
+    <section id="showcase-session" class="py-3 text-white">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="display-4">Learning Session...</h1>
-                    <p class="lead">Periodic Table</p>
+                    <p class="lead">Currently: Periodic Table</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Learn -->
-    <section id="learn" class="py-4">
+    <section id="learn" class="py-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <h2>Learning Session...</h1>
-                    <hr>
-                    <p class="lead">Periodic Table</p>
-
-                    <p class="lead">Note: ...</p>
+                <div class="col-md-8 text-left">
+                    <p class="text-secondary">Progress: </p>
                 </div>
+                <div class="col-md-4 text-right">
+                        <button class="btn btn-secondary" type="submit">FINISH</button>
+                        <button class="btn btn-primary" type="submit">NEXT</button>
+                    </div>
+                <div class="col-md-12 text-center">
+                    <hr>
+                    <h1 class="display-5">This is supposed to be an exammple of a statement hahahaha very long </h1>
+                    <img class="img-fluid" src="{% static 'img/logo_bw_small.png' %}" alt="Statement Image">
+                    <hr>
+                </div>
+                <div class="col-md-12 mt-3 text-center">
+                    <p>Note: ...</p>
+                </div>
+
             </div>
         </div>
     </section>
