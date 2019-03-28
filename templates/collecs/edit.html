@@ -8,9 +8,11 @@
     <section id="showcase-session" class="py-3 text-white">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 text-center">
                     <h1 class="display-4">Edit Collection</h1>
-                    <p class="lead">Editing: Periodic Table</p>
+                    <p class="lead">
+                        Editing: <a href="{% url 'collection' collection.id %}">{{collection.title}}</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -40,22 +42,59 @@
                 <!-- Alerts -->
                 {% include 'partials/_alerts.html' %}
                 <div class="col-md-8">
+                    <h4 class="">Collection Details:</h4>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#previewModal">Edit Statements</button>
+                </div>
+                <div class="col-md-8">
                     <form method="POST" novalidate>
                         {% csrf_token %}
                         {{ form|crispy }}
                         <button type="submit" class="btn btn-primary">Save Collection</button>
                     </form>
                 </div>
-                <div class="col-md-4 border-left py-4">
+                <div class="col-md-4 text-secondary py-4">
                     <p>
-                        You are now editing this collection's details as its creator. Any changes will be passed on to all the users who are already subscribed to this collection.
+                        You are now editing this collection's details as its creator. Any changes will be 
+                        passed on to all the users who are already subscribed to this collection.
                     </p>
                     <p>
-                        Please make sure that the collection details are appropriate. Your collection and/or account may be terminated if the details are found to be inappropriate.
+                        Please make sure that the collection details are appropriate. Your collection 
+                        and/or account may be terminated if the details are found to be inappropriate.
                     </p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- List Modal -->
+    <div class="modal fade" id="previewModal" role="dialog">
+        <div class="modal-dialog modal-l">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">Select Statement</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% if statements %}
+                        {% for statement in statements %}
+                            <div class="list-group">
+                                <a href="{% url 'collection' statement.id %}" class="list-group-item list-group-item-action">
+                                    {{statement.statement}}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-md-12">
+                            <p>This collection has no statements.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

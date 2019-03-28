@@ -8,6 +8,8 @@ from .search import search_collections
 from .listing import get_collection
 
 from .models import Collection
+from statements.models import Statement
+
 
 def index(request):
     context = list_collections(request)
@@ -47,14 +49,17 @@ def edit(request, collection_id):
         return redirect('dashboard')
     else:
         form = EditCollectionForm(request.POST or None, instance=collection)
+        statements = Statement.objects.filter(collection=collection_id)
         context = {
             'form': form,
+            'statements': statements,
+            'collection': collection,
         }
         if request.method == 'POST':
             if form.is_valid():
-                collection = form.save(commit=False)
-                collection.last_update = datetime.now()
-                collection.save()
+                edited_collection = form.save(commit=False)
+                edited_collection.last_update = datetime.now()
+                edited_collection.save()
                 messages.success(request, 'Collection has been edited successfully')
                 return redirect('dashboard')
             else:
