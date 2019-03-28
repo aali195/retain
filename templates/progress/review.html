@@ -4,12 +4,12 @@
 
 {% block content %}
     <!-- Title -->
-    <section id="showcase-session" class="py-4 text-white">
+    <section id="showcase-session" class="py-3 text-white">
         <div class="container">
-            <div class="row text-center">
+            <div class="row">
                 <div class="col-md-12">
-                    <h1 class="display-4">Review Session</h1>
-                    <p class="lead">Periodic Table</p>
+                    <h1 class="display-4">Review Session...</h1>
+                    <p class="lead">Currently: Periodic Table</p>
                 </div>
             </div>
         </div>
@@ -18,40 +18,45 @@
     <!-- Review -->
     <section id="review" class="py-4">
         <div class="container">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3><span class="badge badge-primary" id="qid">2</span> TETING LONG DESCRIPTIONS AHAHAHA</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-3 offset-5">
-                            <div id="loadbar" style="display: none;">
-                                <div class="blockG" id="rotateG_01"></div>
-                                <div class="blockG" id="rotateG_02"></div>
-                                <div class="blockG" id="rotateG_03"></div>
-                                <div class="blockG" id="rotateG_04"></div>
-                                <div class="blockG" id="rotateG_05"></div>
-                                <div class="blockG" id="rotateG_06"></div>
-                                <div class="blockG" id="rotateG_07"></div>
-                                <div class="blockG" id="rotateG_08"></div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 class="display-5">Q: This is supposed to be an exammple of a question hahahaha very long </h1>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="col-3 offset-5">
+                                    <div id="loadbar" style="display: none;">
+                                        <div class="blockG" id="rotateG_01"></div>
+                                        <div class="blockG" id="rotateG_02"></div>
+                                        <div class="blockG" id="rotateG_03"></div>
+                                        <div class="blockG" id="rotateG_04"></div>
+                                        <div class="blockG" id="rotateG_05"></div>
+                                        <div class="blockG" id="rotateG_06"></div>
+                                        <div class="blockG" id="rotateG_07"></div>
+                                        <div class="blockG" id="rotateG_08"></div>
+                                    </div>
+                                </div>
+                                <div class="quiz" id="quiz" data-toggle="buttons">
+                                    <label class="element-animation1 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
+                                        <input type="radio" name="q_answer" value="1">1 One</label>
+                                    <label class="element-animation2 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
+                                        <input type="radio" name="q_answer" value="2">2 Two</label>
+                                    <label class="element-animation3 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
+                                        <input type="radio" name="q_answer" value="3">3 Three</label>
+                                    <label class="element-animation4 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
+                                        <input type="radio" name="q_answer" value="4">4 Four</label>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="modal-footer text-muted"> 
+                                <span id="answer"></span>
                             </div>
                         </div>
-                        <div class="quiz" id="quiz" data-toggle="buttons">
-                            <label class="element-animation1 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
-                                <input type="radio" name="q_answer" value="1">1 One</label>
-                            <label class="element-animation2 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
-                                <input type="radio" name="q_answer" value="2">2 Two</label>
-                            <label class="element-animation3 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
-                                <input type="radio" name="q_answer" value="3">3 Three</label>
-                            <label class="element-animation4 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
-                                <input type="radio" name="q_answer" value="4">4 Four</label>
-                            <br>
-                            <p>Note: N/A</p>
-                        </div>
                     </div>
-                    <div class="modal-footer text-muted"> 
-                        <span id="answer"></span>
-                    </div>
+                    <hr>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button class="btn btn-secondary" type="submit">FINISH</button>
                 </div>
             </div>
         </div>
