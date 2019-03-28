@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from datetime import datetime
 
-from .forms import CollectionForm
+from .forms import NewCollectionForm, EditCollectionForm
 from .listings import list_collections
 from .search import search_collections
 from .listing import get_collection
 
+from .models import Collection
 
 def index(request):
     context = list_collections(request)
@@ -20,7 +22,7 @@ def search(request):
     return render(request, 'collecs/search.html', context)
 
 def new(request):
-    form = CollectionForm(request.POST or None)
+    form = NewCollectionForm(request.POST or None)
     context = {
         'form': form,
     }
@@ -29,7 +31,7 @@ def new(request):
             collection = form.save(commit=False)
             collection.creator = request.user
             collection.save()
-            messages.success(request, 'Collection has been created')
+            messages.success(request, 'Collection has been created successfully')
             return redirect('dashboard')
         else:
             messages.error(request, 'Invalid details')
@@ -38,5 +40,25 @@ def new(request):
         return render(request, 'collecs/new.html', context)
 
 def edit(request, collection_id):
-    context = get_collection(request, collection_id)
-    return render(request, 'collecs/edit.html', context)
+
+    collection = get_object_or_404(Collection, pk=collection_id)
+    if collection.creator != request.user:
+        messages.error(request, 'Collections can only be edited by their creator')
+        return redirect('dashboard')
+    else:
+        form = EditCollectionForm(request.POST or None, instance=collection)
+        context = {
+            'form': form,
+        }
+        if request.method == 'POST':
+            if form.is_valid():
+                collection = form.save(commit=False)
+                collection.last_update = datetime.now()
+                collection.save()
+                messages.success(request, 'Collection has been edited successfully')
+                return redirect('dashboard')
+            else:
+                messages.error(request, 'Invalid details')
+                return render(request, 'collecs/edit.html', context)
+        else:
+            return render(request, 'collecs/edit.html', context)
