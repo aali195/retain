@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    'crispy_forms',
     
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
@@ -145,6 +146,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'retain/static')
 ]
+
+# Crispy Forms bootstrap version
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Media Folder Settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
