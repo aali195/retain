@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <!-- Title -->
+    <section id="showcase-session" class="py-3 text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="display-4">New Collection</h1>
+                    <p class="lead">Create a new public or private collection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section id="bc" class="mt-3">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'collections' %}">Collections</a>
+                    </li>
+                    <li class="breadcrumb-item active">New Collection</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+
+{% endblock %}

@@ -4,6 +4,7 @@ from .listings import list_collections
 from .search import search_collections
 from .listing import get_collection
 
+
 def index(request):
     context = list_collections(request)
     return render(request, 'collecs/collections.html', context)
@@ -15,3 +16,10 @@ def collection(request, collection_id):
 def search(request):
     context = search_collections(request)
     return render(request, 'collecs/search.html', context)
+
+def new(request):
+    return render(request, 'collecs/new.html')
+
+def edit(request, collection_id):
+    context = get_collection(request, collection_id)
+    return render(request, 'collecs/edit.html', context)
