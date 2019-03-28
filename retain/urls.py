@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('users/', include('users.urls')),
     path('collections/', include('collecs.urls')),
+    path('collections/', include('statements.urls')),
     path('progress/', include('progress.urls')),
     path('api/', include('rest_framework.urls')),
     path('api/v1/', include(router.urls)),

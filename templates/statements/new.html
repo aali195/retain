@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <!-- Title -->
+    <section id="showcase-session" class="py-3 text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 class="display-4">New Statement</h1>
+                    <p class="lead">
+                        Editing: <a href="{% url 'collection' %}">statementname</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section id="bc" class="mt-3">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'dashboard' %}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'collection' %}">Collection</a>
+                    </li>
+                    <li class="breadcrumb-item active">Edit statementname</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Form -->
+    <section id="editcollection" class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Alerts -->
+                {% include 'partials/_alerts.html' %}
+                <div class="col-md-8">
+                    <h4 class="">Statement Details:</h4>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#previewModal">Edit Statements</button>
+                </div>
+                <div class="col-md-8">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        
+                        <button type="submit" class="btn btn-primary">Save Collection</button>
+                    </form>
+                </div>
+                <div class="col-md-4 text-secondary py-4">
+                    <p>
+                        You are now editing this collection's details as its creator. Any changes will be 
+                        passed on to all the users who are already subscribed to this collection.
+                    </p>
+                    <p>
+                        Please make sure that the collection details are appropriate. Your collection 
+                        and/or account may be terminated if the details are found to be inappropriate.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
