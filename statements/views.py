@@ -4,25 +4,34 @@ from django.contrib import messages
 from .forms import StatementForm
 
 from .models import Statement
+from collecs.models import Collection
 
 
 def new(request, collection_id):
-    form = StatementForm(request.POST or None)
-    context = {
-        'form': form,
-    }
-    if request.method == 'POST':
-        if form.is_valid():
-            statement = form.save(commit=False)
-            statement.collection = collection_id
-            statement.save()
-            messages.success(request, 'Statement has been created successfully')
-            return redirect('dashboard')
-        else:
-            messages.error(request, 'Invalid details')
-            return render(request, 'statements/new.html', context)
+    collection = get_object_or_404(Collection, pk=collection_id)
+    if collection.creator != request.user:
+        messages.error(request, 'Statements can only be added by the collection creator')
+        return redirect('dashboard')
     else:
-        return render(request, 'statements/new.html', context)
+        form = StatementForm(request.POST or None)
+        context = {
+            'form': form,
+            'collection': collection,
+        }
+        if request.method == 'POST':
+            if form.is_valid():
+                statement = form.save(commit=False)
+                statement.collection = collection
+                statement.save()
+                messages.success(request, 'Statement has been created successfully')
+                form = StatementForm()
+                context['form'] = form
+                return render(request, 'statements/new.html', context)
+            else:
+                messages.error(request, 'Invalid details')
+                return render(request, 'statements/new.html', context)
+        else:
+            return render(request, 'statements/new.html', context)
 
 
 def edit(request, collection_id, statement_id):
