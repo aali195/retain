@@ -19,7 +19,7 @@ from subscriptions.models import Subscription
 
 class ListCollectionsView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    queryset = Collection.objects.all()
+    queryset = Collection.objects.filter(is_visible=True).filter(size__gte=10)
     serializer_class = CollectionSerializer
     http_method_names = ['get']
 
@@ -44,11 +44,11 @@ class StatementsView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         collection_id = self.kwargs['collection_id']
-        statement = Statement.objects.filter(collection_id=collection_id)
-        if statement:
-            return statement
-        else:
+        if not Collection.objects.filter(pk=collection_id, is_visible=True).exists():
             raise NotFound(detail="Not found.", code=404)
+        else:
+            return Statement.objects.filter(collection_id=collection_id)
+        
     
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

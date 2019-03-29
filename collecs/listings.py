@@ -14,7 +14,7 @@ def list_collections(request):
 
 
 def filter_collections(collecs):
-    filtered_collecs = Collection.objects.order_by('-upload_date').filter(is_visible=True)
+    filtered_collecs = Collection.objects.order_by('-upload_date').filter(is_visible=True).filter(size__gte=10)
     return filtered_collecs
 
 def add_pagination(request, collecs):

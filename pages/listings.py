@@ -10,5 +10,5 @@ def featured_collecs():
 
 
 def filter_collections(collecs):
-    filtered_collecs = Collection.objects.order_by('-rating').filter(is_visible=True)[:3]
+    filtered_collecs = Collection.objects.order_by('-rating').filter(is_visible=True).filter(size__gte=10)[:3]
     return filtered_collecs
