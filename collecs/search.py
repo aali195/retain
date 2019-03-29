@@ -7,7 +7,7 @@ def search_collections(request):
     if 'keywords' in request.GET:
         keywords = request.GET['keywords']
         if keywords:
-            queryset_list = queryset_list.filter(title__icontains=keywords)
+            queryset_list = queryset_list.filter(is_visible=True).filter(title__icontains=keywords)
             
     context = {
         'keywords': keywords,
