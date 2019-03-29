@@ -9,6 +9,7 @@ from collecs.models import Collection
 
 def new(request, collection_id):
     collection = get_object_or_404(Collection, pk=collection_id)
+
     if collection.creator != request.user:
         messages.error(request, 'Statements can only be added by the collection creator')
         return redirect('dashboard')
@@ -18,11 +19,14 @@ def new(request, collection_id):
             'form': form,
             'collection': collection,
         }
+
         if request.method == 'POST':
             if form.is_valid():
-                statement = form.save(commit=False)
-                statement.collection = collection
-                statement.save()
+                new_statement = form.save(commit=False)
+                new_statement.collection = collection
+                new_statement.save()
+                collection.size += 1
+                collection.save()
                 messages.success(request, 'Statement has been created successfully')
                 form = StatementForm()
                 context['form'] = form
@@ -36,9 +40,11 @@ def new(request, collection_id):
 
 def edit(request, collection_id, statement_id):
     statement = get_object_or_404(Statement, pk=statement_id, collection_id=collection_id)
+
     if statement.collection.creator != request.user:
         messages.error(request, 'Statements can only be edited by the collection creator')
         return redirect('dashboard')
+    
     else:
         form = StatementForm(request.POST or None, instance=statement)
         statements = Statement.objects.filter(collection=collection_id)
@@ -47,6 +53,7 @@ def edit(request, collection_id, statement_id):
             'statement': statement,
             'statements': statements,
         }
+        
         if request.method == 'POST':
             if form.is_valid():
                 edited_statement = form.save(commit=False)
