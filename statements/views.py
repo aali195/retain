@@ -35,8 +35,7 @@ def new(request, collection_id):
 
 
 def edit(request, collection_id, statement_id):
-    
-    statement = get_object_or_404(Statement, pk=statement_id)
+    statement = get_object_or_404(Statement, pk=statement_id, collection_id=collection_id)
     if statement.collection.creator != request.user:
         messages.error(request, 'Statements can only be edited by the collection creator')
         return redirect('dashboard')
@@ -53,7 +52,7 @@ def edit(request, collection_id, statement_id):
                 edited_statement = form.save(commit=False)
                 edited_statement.save()
                 messages.success(request, 'Statement has been edited successfully')
-                return redirect('dashboard')
+                return render(request, 'statements/edit.html', context)
             else:
                 messages.error(request, 'Invalid details')
                 return render(request, 'statements/edit.html', context)
