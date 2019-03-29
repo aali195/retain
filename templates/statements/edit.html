@@ -31,7 +31,7 @@
                         <a href="{% url 'dashboard' %}">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{% url 'collection' statement.collection.id %}">Edit Collection</a>
+                        <a href="{% url 'edit_collection' statement.collection.id %}">Edit Collection</a>
                     </li>
                     <li class="breadcrumb-item active">Edit Statement</li>
                 </ol>
@@ -49,8 +49,8 @@
                     <h4 class="">Details:</h4>
                 </div>
                 <div class="col-md-4 text-right">
-                    <button class="btn btn-secondary" data-toggle="modal" data-target="#previewModal">Edit Other</button>
                     <a href="{% url 'new_statement' statement.collection.id %}" class="btn btn-secondary">Add New</a>
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#previewModal">Edit Other</button>
                 </div>
                 <div class="col-md-8">
                     <form method="POST" novalidate>

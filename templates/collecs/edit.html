@@ -11,7 +11,7 @@
                 <div class="col-md-12 text-center">
                     <h1 class="display-4">Edit Collection</h1>
                     <p class="lead">
-                        Editing: <a href="{% url 'collection' collection.id %}">{{collection.title}}</a>
+                        Collection: <a href="{% url 'collection' collection.id %}">{{collection.title}}</a>
                     </p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <li class="breadcrumb-item">
                         <a href="{% url 'dashboard' %}">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Edit {{collection.title}}</li>
+                    <li class="breadcrumb-item active">Edit Collection</li>
                 </ol>
             </nav>
         </div>
@@ -42,9 +42,10 @@
                 <!-- Alerts -->
                 {% include 'partials/_alerts.html' %}
                 <div class="col-md-8">
-                    <h4 class="">Collection Details:</h4>
+                    <h4 class="">Details:</h4>
                 </div>
                 <div class="col-md-4 text-right">
+                    <a href="{% url 'new_statement' collection.id %}" class="btn btn-secondary">New Statement</a>
                     <button class="btn btn-secondary" data-toggle="modal" data-target="#previewModal">Edit Statements</button>
                 </div>
                 <div class="col-md-8">
@@ -62,6 +63,10 @@
                     <p>
                         Please make sure that the collection details are appropriate. Your collection 
                         and/or account may be terminated if the details are found to be inappropriate.
+                    </p>
+                    <p>
+                        You need to add at least 10 statements in the collection for it to be usable and 
+                        visible to other users.
                     </p>
                 </div>
             </div>
@@ -82,7 +87,7 @@
                     {% if statements %}
                         {% for statement in statements %}
                             <div class="list-group">
-                                <a href="{% url 'collection' statement.id %}" class="list-group-item list-group-item-action">
+                                <a href="{% url 'edit_statement' statement.collection.id statement.id %}" class="list-group-item list-group-item-action">
                                     {{statement.statement}}
                                 </a>
                             </div>

@@ -62,7 +62,7 @@
                                         {% for collection in created %}
                                             <tr>
                                                 <td><a href="#" class="card-link">{{collection.title}}</a></td>
-                                                <td><a class="btn btn-secondary" href="#">Edit</a></td>
+                                                <td><a class="btn btn-secondary" href="{% url 'edit_collection' collection.id %}">Edit</a></td>
                                             </tr>
                                         {% endfor %}
                                     {% else %}

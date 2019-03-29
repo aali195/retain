@@ -34,7 +34,7 @@ def new(request):
             collection.creator = request.user
             collection.save()
             messages.success(request, 'Collection has been created successfully')
-            return redirect('dashboard')
+            return redirect('edit_collection', collection.id)
         else:
             messages.error(request, 'Invalid details')
             return render(request, 'collecs/new.html', context)
@@ -61,7 +61,7 @@ def edit(request, collection_id):
                 edited_collection.last_update = datetime.now()
                 edited_collection.save()
                 messages.success(request, 'Collection has been edited successfully')
-                return redirect('dashboard')
+                return render(request, 'collecs/edit.html', context)
             else:
                 messages.error(request, 'Invalid details')
                 return render(request, 'collecs/edit.html', context)

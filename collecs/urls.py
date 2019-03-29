@@ -6,6 +6,6 @@ urlpatterns = [
     path('', views.index, name='collections'),
     path('<int:collection_id>', views.collection, name='collection'),
     path('search', views.search, name='search'),
-    path('new', views.new, name='new'),
-    path('<int:collection_id>/edit', views.edit, name='edit'),
+    path('new', views.new, name='new_collection'),
+    path('<int:collection_id>/edit', views.edit, name='edit_collection'),
 ]
