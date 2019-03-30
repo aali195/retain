@@ -9,6 +9,7 @@ class Subscription(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.DO_NOTHING)
     sub_date = models.DateTimeField(default=datetime.now)
     completed_count = models.IntegerField(default=0)
+    last_reviewed = models.DateTimeField(default=datetime.now)
     rating = models.IntegerField(default=0)
 
     def __str__(self):
