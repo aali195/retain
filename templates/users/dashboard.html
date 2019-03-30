@@ -79,11 +79,11 @@
                             <h5 class="card-title">My Added Collections</h5>
                             <table class="table">
                                 <tbody>
-                                    {% if subbed %}
-                                        {% for collection in subbed %}
+                                    {% if subscriptions %}
+                                        {% for subscription in subscriptions %}
                                             <tr>
-                                                <td><a href="#" class="card-link">{{collection.title}}</a></td>
-                                                <td>5/100</td>
+                                                <td><a href="#" class="card-link">{{subscription.collection.title}}</a></td>
+                                                <td>{{subscription.completed_count}}/{{subscription.collection.size}}</td>
                                                 <td><a class="btn btn-secondary" href="#">Activate</a></td>
                                             </tr>
                                         {% endfor %}
