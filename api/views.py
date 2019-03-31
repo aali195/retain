@@ -1,7 +1,7 @@
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, PermissionDenied
 from django.shortcuts import get_object_or_404
 
 from .serializers import (
@@ -9,7 +9,8 @@ from .serializers import (
     StatementSerializer, 
     UserSettingsSerializer, 
     UserSubscriptionsSerializer,
-    CreatedCollectionSerializer
+    CreatedCollectionSerializer,
+    UpdateLearnedSerializer,
 )
 from collecs.models import Collection
 from statements.models import Statement
@@ -80,6 +81,29 @@ class UserSubscriptionsView(viewsets.ModelViewSet):
     def get_queryset(self):
         return Subscription.objects.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=self.request.user)
+
+class LearnStatementView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = StatementSerializer
+
+    def get_serializer_class(self): 
+        serializer_class = self.serializer_class 
+        if self.request.method == 'POST': 
+            serializer_class = UpdateLearnedSerializer 
+        return serializer_class
+
+    def get_queryset(self):
+        user_settings = get_object_or_404(UserSettings, user=self.request.user)
+        subscription = get_object_or_404(Subscription, collection=user_settings.active_collection, user=self.request.user)
+        statements = Statement.objects.filter(collection=subscription.collection)
+        if statements.count() < 10:
+            raise PermissionDenied(detail="Collection has less than 10 statements.", code=403)
+        else:
+            return statements.order_by('id')[subscription.completed_count:subscription.completed_count+1]
+        
     def perform_create(self, serializer):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user)
