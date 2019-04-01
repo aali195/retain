@@ -2,6 +2,7 @@ from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound, PermissionDenied
+from django.db.models import F
 from django.shortcuts import get_object_or_404
 
 from .serializers import (
@@ -11,11 +12,14 @@ from .serializers import (
     UserSubscriptionsSerializer,
     CreatedCollectionSerializer,
     UpdateLearnedSerializer,
+    UpdateReviewedSerializer
 )
+
 from collecs.models import Collection
 from statements.models import Statement
 from usersettings.models import UserSettings
 from subscriptions.models import Subscription
+from progress.models import Progress
 
 
 class ListCollectionsView(viewsets.ModelViewSet):
@@ -107,3 +111,50 @@ class LearnStatementView(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user)
+
+
+class ReviewStatementView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = Statement.objects.all()
+    serializer_class = StatementSerializer
+
+    def get_serializer_class(self): 
+        serializer_class = self.serializer_class 
+        if self.request.method == 'POST': 
+            serializer_class = UpdateReviewedSerializer
+        return serializer_class
+
+    def list(self, request, *args, **kwargs):
+        user_settings = get_object_or_404(UserSettings, user=self.request.user)
+        active_statements = Statement.objects.filter(collection=user_settings.active_collection)
+        if active_statements.count() < 10:
+            raise PermissionDenied(detail="Collection has less than 10 statements.", code=403)
+        else:
+            user_collection_progress = Progress.objects.filter(user=self.request.user, statement__collection=user_settings.active_collection)
+            if user_collection_progress.count() < 4:
+                raise PermissionDenied(detail="Need to learn 4 statements before reviewing", code=403)
+            else:
+                active_progress = user_collection_progress.annotate(review_incorrect=F('review_total')-F('review_correct')).order_by('-review_incorrect')[0]
+                current_statement = get_object_or_404(active_statements, statement=active_progress.statement)
+                other_statements = active_statements.exclude(statement=current_statement).order_by('?')[:3]
+                
+                if current_statement.image:
+                    current_statement_image = current_statement.image.path
+                else:
+                    current_statement_image = 'N/A'
+
+                return Response({
+                    'progress_id': active_progress.id,
+                    'statement_id': current_statement.id,
+                    'image': current_statement_image,
+                    'statement': current_statement.statement,
+                    'question': current_statement.question,
+                    'answer': current_statement.answer,
+                    'note': active_progress.note,
+                    'wrong_answer_1': other_statements[0].answer,
+                    'wrong_answer_2': other_statements[1].answer,
+                    'wrong_answer_3': other_statements[2].answer,
+                })
+
+    def perform_create(self, serializer):
+        serializer.is_valid(raise_exception=True)
