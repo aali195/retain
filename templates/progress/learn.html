@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="display-4">Learning Session...</h1>
-                    <p class="lead">Currently: Periodic Table</p>
+                    <p class="lead">Currently: <a href="{% url 'collection' user_settings.active_collection.id %}">{{user_settings.active_collection}}</a></p>
                 </div>
             </div>
         </div>
@@ -20,25 +20,28 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 text-left">
-                    <p class="text-secondary">Progress: </p>
+                    <p class="text-secondary">Progress: <span id="completed-count" >{{subscription.completed_count}}</span> / <span id="collection-size" >{{subscription.collection.size}}</span></p>
                 </div>
                 <div class="col-md-4 text-right">
-                    <button class="btn btn-secondary" type="submit">FINISH</button>
-                    <button class="btn btn-primary" type="submit">NEXT</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary" type="submit">FINISH</a>
+                    <button id="next" class="btn btn-primary" type="submit">NEXT</button>
                 </div>
                 <div class="col-md-12 text-center">
                     <hr>
-                    <h1 class="display-5">This is supposed to be an exammple of a statement hahahaha very long </h1>
-                    <img class="img-fluid" src="{% static 'img/logo_bw_small.png' %}" alt="Statement Image">
+                    <h1 id="statement" class="display-5"></h1>
+                    <img id="image" class="img-fluid py-3" src="">
                     <hr>
                 </div>
                 <div class="col-md-12 mt-3 text-center">
-                    <p>Note: ...</p>
+                    <p>Note: <input id="note" class="form-control" type="text" placeholder=""></p>
                 </div>
 
             </div>
         </div>
     </section>
-    
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/learn.js' %}"></script>
 {% endblock %}
