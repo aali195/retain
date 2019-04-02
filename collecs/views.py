@@ -5,7 +5,7 @@ from datetime import datetime
 from .forms import NewCollectionForm, EditCollectionForm
 from .listings import list_collections
 from .search import search_collections
-from .listing import get_collection, calc_rating
+from .listing import get_collection, calc_rating, subscribe_user
 
 from .models import Collection
 from statements.models import Statement
@@ -17,8 +17,10 @@ def index(request):
     
 def collection(request, collection_id):
     if request.method == 'POST':
-        if request.POST['rating-select']:
+        if request.POST.get('rating-select'):
             calc_rating(request, collection_id)
+        elif request.POST.get('subscription'):
+            subscribe_user(request, collection_id)
 
     context = get_collection(request, collection_id)
     return render(request, 'collecs/collection.html', context)

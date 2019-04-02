@@ -36,3 +36,14 @@ def calc_rating(request, collection_id):
     collection.rating = int(new_rating['rating__avg'])
     collection.save()
     return
+
+def subscribe_user(request, collection_id):
+    collection = get_object_or_404(Collection, pk=collection_id)
+    subscription = Subscription.objects.filter(user=request.user, collection=collection)
+
+    if not subscription.exists():
+        Subscription.objects.create(user=request.user, collection=collection)
+    else:
+        subscription.delete()
+    
+    return
