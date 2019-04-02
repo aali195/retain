@@ -4,6 +4,7 @@ from django.db.models import Avg, F
 from .models import Collection
 from statements.models import Statement
 from subscriptions.models import Subscription
+from progress.models import Progress
 
 def get_collection(request, collection_id):
     collection = get_object_or_404(Collection, pk=collection_id)
@@ -44,6 +45,7 @@ def subscribe_user(request, collection_id):
     if not subscription.exists():
         Subscription.objects.create(user=request.user, collection=collection)
     else:
+        user_progress = Progress.objects.filter(user=request.user, statement__collection=collection)
         subscription.delete()
-    
+        user_progress.delete()
     return
