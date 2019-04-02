@@ -33,40 +33,47 @@
         </div>
     </section>
 
-    <!-- Form -->
-    <section id="newcollection" class="py-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <!-- Alerts -->
-                {% include 'partials/_alerts.html' %}
-                <div class="col-md-12">
-                    <h4 class="">Details:</h4>
-                </div>
-                <div class="col-md-8">
-                    <form method="POST" novalidate>
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                        <button type="submit" class="btn btn-primary">Create Collection</button>
-                    </form>
-                </div>
-                <div class="col-md-4 border-left py-4 text-secondary">
-                    <p>
-                        Selecting the "Is visible" option will make your collection available to the public. 
-                        other users will be able to subscribe to your collection and use it. You cannot 
-                        change this option later.
-                    </p>
-                    <p>
-                        Please make sure that the collection details are appropriate. Your collection 
-                        and/or account may be terminated if the details are found to be inappropriate.
-                    </p>
-                    <p>
-                        You will be taken to the collection editor after you save this collection. You 
-                        need to add at least 10 statements in the collection for it to be usable and 
-                        visible to other users.
-                    </p>
+    {% if user.is_authenticated %}
+
+        <!-- Form -->
+        <section id="newcollection" class="py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Alerts -->
+                    {% include 'partials/_alerts.html' %}
+                    <div class="col-md-12">
+                        <h4 class="">Details:</h4>
+                    </div>
+                    <div class="col-md-8">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-primary">Create Collection</button>
+                        </form>
+                    </div>
+                    <div class="col-md-4 border-left py-4 text-secondary">
+                        <p>
+                            Selecting the "Is visible" option will make your collection available to the public. 
+                            other users will be able to subscribe to your collection and use it. You cannot 
+                            change this option later.
+                        </p>
+                        <p>
+                            Please make sure that the collection details are appropriate. Your collection 
+                            and/or account may be terminated if the details are found to be inappropriate.
+                        </p>
+                        <p>
+                            You will be taken to the collection editor after you save this collection. You 
+                            need to add at least 10 statements in the collection for it to be usable and 
+                            visible to other users.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+    {% else %}
+        <!-- Alerts -->
+        {% include 'partials/_notloggedin.html' %}
+    {% endif %}
 
 {% endblock %}

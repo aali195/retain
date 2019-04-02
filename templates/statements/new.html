@@ -39,37 +39,44 @@
         </div>
     </section>
 
-    <!-- Form -->
-    <section id="addcollection" class="py-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <!-- Alerts -->
-                {% include 'partials/_alerts.html' %}
-                <div class="col-md-8">
-                    <h4 class="">Details:</h4>
-                </div>
-                <div class="col-md-4 text-right">
-                    <a href="{% url 'edit_collection' collection.id %}" class="btn btn-secondary">Edit Collection</a>
-                </div>
-                <div class="col-md-8">
-                    <form method="POST" novalidate>
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                        <button type="submit" class="btn btn-primary">Create Statement</button>
-                    </form>
-                </div>
-                <div class="col-md-4 text-secondary py-4">
-                    <p>
-                        You are now editing this collection's details as its creator. Any changes will be 
-                        passed on to all the users who are already subscribed to this collection.
-                    </p>
-                    <p>
-                        Please make sure that the collection details are appropriate. Your collection 
-                        and/or account may be terminated if the details are found to be inappropriate.
-                    </p>
+    {% if user.is_authenticated %}
+
+        <!-- Form -->
+        <section id="addcollection" class="py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Alerts -->
+                    {% include 'partials/_alerts.html' %}
+                    <div class="col-md-8">
+                        <h4 class="">Details:</h4>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <a href="{% url 'edit_collection' collection.id %}" class="btn btn-secondary">Edit Collection</a>
+                    </div>
+                    <div class="col-md-8">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" class="btn btn-primary">Create Statement</button>
+                        </form>
+                    </div>
+                    <div class="col-md-4 text-secondary py-4">
+                        <p>
+                            You are now editing this collection's details as its creator. Any changes will be 
+                            passed on to all the users who are already subscribed to this collection.
+                        </p>
+                        <p>
+                            Please make sure that the collection details are appropriate. Your collection 
+                            and/or account may be terminated if the details are found to be inappropriate.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+    {% else %}
+        <!-- Alerts -->
+        {% include 'partials/_notloggedin.html' %}
+    {% endif %}
 
 {% endblock %}

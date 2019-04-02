@@ -15,30 +15,37 @@
         </div>
     </section>
 
-    <!-- Learn -->
-    <section id="learn" class="py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 text-left">
-                    <p class="text-secondary">Progress: <span id="completed-count" >{{subscription.completed_count}}</span> / <span id="collection-size" >{{subscription.collection.size}}</span></p>
-                </div>
-                <div class="col-md-4 text-right">
-                    <a href="{% url 'dashboard' %}" class="btn btn-secondary" type="submit">FINISH</a>
-                    <button id="next" class="btn btn-primary" type="submit">NEXT</button>
-                </div>
-                <div class="col-md-12 text-center">
-                    <hr>
-                    <h1 id="statement" class="display-5"></h1>
-                    <img id="image" class="img-fluid py-3" src="">
-                    <hr>
-                </div>
-                <div class="col-md-12 mt-3 text-center">
-                    <p>Note: <input id="note" class="form-control" type="text" placeholder=""></p>
-                </div>
+    {% if user.is_authenticated %}
+    
+        <!-- Learn -->
+        <section id="learn" class="py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 text-left">
+                        <p class="text-secondary">Progress: <span id="completed-count" >{{subscription.completed_count}}</span> / <span id="collection-size" >{{subscription.collection.size}}</span></p>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <a href="{% url 'dashboard' %}" class="btn btn-secondary" type="submit">FINISH</a>
+                        <button id="next" class="btn btn-primary" type="submit">NEXT</button>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <hr>
+                        <h1 id="statement" class="display-5"></h1>
+                        <img id="image" class="img-fluid py-3" src="">
+                        <hr>
+                    </div>
+                    <div class="col-md-12 mt-3 text-center">
+                        <p>Note: <input id="note" class="form-control" type="text" placeholder=""></p>
+                    </div>
 
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+    {% else %}
+        <!-- Alerts -->
+        {% include 'partials/_notloggedin.html' %}
+    {% endif %}
 
 {% endblock %}
 
