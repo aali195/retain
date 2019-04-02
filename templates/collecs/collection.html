@@ -30,7 +30,23 @@
                         <img class="card-img-top" src="{{collection.image.url}}" alt="Collection Image">
                         <div class="card-body">
                             <h5 class="card-title">{{collection.title}}</h5>
-                            <h6 class="text-secondary">RATING</h6>
+                            <h6 class="text-secondary"> Rated: {{collection.rating}}/5</h6>
+                            {% if subscription %}
+                                <div class="form-group">
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <select name="rating-select" id="rating" class="form-control" onchange="this.form.submit()">
+                                            <option value="0">---</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </form>
+                                </div>
+                            {% endif %}
+
                         </div>
                     </div>
                     <button class="btn btn-secondary btn-block mt-4" data-toggle="modal" data-target="#previewModal">Preview</button>
@@ -69,6 +85,11 @@
                     <div class="row mb-4">
                         <div class="col-md-12">
                             {{collection.description}}
+                            {% if user == collection.creator %}
+                                <div class="text-right">
+                                    <a href="{% url 'edit_collection' collection.id %}" class="btn btn-secondary mt-4">Edit Collection</a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
