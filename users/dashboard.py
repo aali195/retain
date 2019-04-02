@@ -1,5 +1,3 @@
-from django.shortcuts import get_object_or_404
-
 from collecs.models import Collection
 from subscriptions.models import Subscription
 from usersettings.models import UserSettings
@@ -7,9 +5,9 @@ from usersettings.models import UserSettings
 
 def activate_collection(request):
     selected_collection_id = request.POST.get('activate')
-    collection = get_object_or_404(Collection, pk=selected_collection_id)
+    collection = Collection.objects.filter(pk=selected_collection_id)[0]
 
-    user_settings = get_object_or_404(UserSettings, user=request.user)
+    user_settings = UserSettings.objects.filter(user=request.user)[0]
     user_settings.active_collection = collection
     user_settings.save()
 
@@ -26,7 +24,7 @@ def dashboard_details(request):
     return context
 
 def current_details(request):
-    user_settings = get_object_or_404(UserSettings, user=request.user)
+    user_settings = UserSettings.objects.filter(user=request.user)[0]
     return Subscription.objects.get(collection=user_settings.active_collection, user=request.user)
 
 def created_list(request):
