@@ -49,7 +49,7 @@
                                                 <p class="py-2">You need to learn at least 4 statements to start reviewing.</p>
                                             {% endif %}
                                             <div class="py-4">
-                                                {% if current.completed_count != 0 and current.completed_count < current.collection.size %}
+                                                {% if current.collection.size != 0 and current.completed_count < current.collection.size %}
                                                     <a href="{% url 'learn' %}" class="btn text-white btn-primary">LEARN</a>
                                                 {% endif %}
                                                 {% if current.completed_count > 3  %}
