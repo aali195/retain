@@ -38,44 +38,35 @@
                     <div class="col-md-8 py-3">
                         <div class="card">
                             <div class="card-body">
-                                <h2 class="card-title">{{current.collection}}</h2>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <h5>Completed: {{current.completed_count}}/{{current.collection.size}} </h5>
-                                        <h5>Last reviewed: {{current.last_reviewed}} </h5>
+                                {% if subscriptions %}
+                                    <h2 class="card-title">{{current.collection}}</h2>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5>Completed: {{current.completed_count}}/{{current.collection.size}} </h5>
+                                            <h5>Last reviewed: {{current.last_reviewed}} </h5>
+                                            {% if current.completed_count < 4  %}
+                                                <p class="py-2">You need to learn at least 4 statements to start reviewing.</p>
+                                            {% endif %}
+                                            <div class="py-4">
+                                                {% if current.completed_count != 0 and current.completed_count < current.collection.size %}
+                                                    <a href="{% url 'learn' %}" class="btn text-white btn-primary">LEARN</a>
+                                                {% endif %}
+                                                {% if current.completed_count > 3  %}
+                                                    <a href="{% url 'review' %}" class="btn text-white btn-primary">REVIEW</a>
+                                                {% endif %}
+                                                </div>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            <img src="{{current.collection.image.url}}" alt="" class="img-fluid">
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 text-center">
-                                        <img src="{{current.collection.image.url}}" alt="" class="img-main img-fluid">
-                                        <a href="{% url 'review' %}" class="btn text-white btn-primary">REVIEW</a>
-                                        <a href="{% url 'learn' %}" class="btn text-white btn-primary">LEARN</a>
-                                    </div>
-                                </div>
+                                {% else %}
+                                    <h2 class="card-title">You have no active collection</h2>
+                                {% endif %}
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4 py-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">My Created Collections</h5>
-                                <table class="table">
-                                    <tbody>
-                                        {% if created %}
-                                            {% for collection in created %}
-                                                <tr>
-                                                    <td><a href="{% url 'collection' collection.id %}" class="card-link">{{collection.title}}</a></td>
-                                                    <td><a class="btn btn-secondary" href="{% url 'edit_collection' collection.id %}">Edit</a></td>
-                                                </tr>
-                                            {% endfor %}
-                                        {% else %}
-                                            <p>You have no created any collections.</p>
-                                        {% endif %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8 py-3">
+                        <br>
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">My Added Collections</h5>
@@ -97,6 +88,28 @@
                                         {% else %}
                                             <p>You have not subscribed to any collections.</p>
                                         {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 py-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">My Created Collections</h5>
+                                <table class="table">
+                                    <tbody>
+                                        {% if created %}
+                                            {% for collection in created %}
+                                                <tr>
+                                                    <td><a href="{% url 'collection' collection.id %}" class="card-link">{{collection.title}}</a></td>
+                                                    <td><a class="btn btn-secondary" href="{% url 'edit_collection' collection.id %}">Edit</a></td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>You have no created any collections.</p>
+                                        {% endif %}
+                                        <td><a class="btn btn-primary" href="{% url 'new_collection' %}">New Collection</a></td>
                                     </tbody>
                                 </table>
                             </div>
