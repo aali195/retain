@@ -76,41 +76,29 @@
         </div>
     </section>
     
-    <!-- Preview Modal TEMP -->
+    <!-- List Modal -->
     <div class="modal fade" id="previewModal" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-l">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="previewModalLabel">Content Preview</h5>
+                    <h5 class="modal-title" id="previewModalLabel">Statement Preview</h5>
                     <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
+                        <span>&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="property_name" class="col-form-label">Property:</label>
-                            <input type="text" name="listing" class="form-control" value="45 Drivewood Cirlce" disabled>
+                    {% if statements %}
+                        <div class="list-group">
+                            {% for statement in statements %}
+                                <li class="list-group-item">{{statement.statement}}</li>
+                            {% endfor %}
                         </div>
-                        <div class="form-group">
-                            <label for="name" class="col-form-label">Name:</label>
-                            <input type="text" name="name" class="form-control" required>
+
+                    {% else %}
+                        <div class="col-md-12">
+                            <p>This collection has no statements.</p>
                         </div>
-                        <div class="form-group">
-                            <label for="email" class="col-form-label">Email:</label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" class="col-form-label">Phone:</label>
-                            <input type="text" name="phone" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="message" class="col-form-label">Message:</label>
-                            <textarea name="message" class="form-control"></textarea>
-                        </div>
-                        <hr>
-                        <input type="submit" value="Send" class="btn btn-block btn-secondary">
-                    </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
