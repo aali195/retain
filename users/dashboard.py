@@ -25,7 +25,7 @@ def dashboard_details(request):
 
 def current_details(request):
     user_settings = UserSettings.objects.filter(user=request.user)[0]
-    return Subscription.objects.get(collection=user_settings.active_collection, user=request.user)
+    return Subscription.objects.filter(collection=user_settings.active_collection, user=request.user).first()
 
 def created_list(request):
     return Collection.objects.order_by('-upload_date').filter(creator=request.user)
