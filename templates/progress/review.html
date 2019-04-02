@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="display-4">Review Session...</h1>
-                    <p class="lead">Currently: Periodic Table</p>
+                    <p class="lead">Currently: <a href="{% url 'collection' user_settings.active_collection.id %}">{{user_settings.active_collection}}</a></p>
                 </div>
             </div>
         </div>
@@ -20,47 +20,54 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h1 class="display-5">Q: This is supposed to be an exammple of a question hahahaha very long </h1>
-                    <div class="modal-dialog">
+                    <h1 id="question" class="display-5"></h1>
+
+                    <div id="statement-details" class="py-4" style="display: none;">
+                        <h3 id="statement"></h3>
+                        <p>Note: <span id="note" >sometext</span></p>
+                        <img id="image" class="img-fluid py-3" src="">
+                    </div>
+
+                    <div id="quiz" class="modal-dialog" style="display: none;">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="col-3 offset-5">
-                                    <div id="loadbar" style="display: none;">
-                                        <div class="blockG" id="rotateG_01"></div>
-                                        <div class="blockG" id="rotateG_02"></div>
-                                        <div class="blockG" id="rotateG_03"></div>
-                                        <div class="blockG" id="rotateG_04"></div>
-                                        <div class="blockG" id="rotateG_05"></div>
-                                        <div class="blockG" id="rotateG_06"></div>
-                                        <div class="blockG" id="rotateG_07"></div>
-                                        <div class="blockG" id="rotateG_08"></div>
-                                    </div>
                                 </div>
-                                <div class="quiz" id="quiz" data-toggle="buttons">
+                                <div class="quiz" data-toggle="buttons">
                                     <label class="element-animation1 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
-                                        <input type="radio" name="q_answer" value="1">1 One</label>
+                                        <input type="radio" name="r-ans1" value="">
+                                        <span id="ans1"></span>
+                                    </label>
                                     <label class="element-animation2 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
-                                        <input type="radio" name="q_answer" value="2">2 Two</label>
+                                        <input type="radio" name="r-ans2" value="">
+                                        <span id="ans2"></span>
+                                    </label>
                                     <label class="element-animation3 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
-                                        <input type="radio" name="q_answer" value="3">3 Three</label>
+                                        <input type="radio" name="r-ans3" value="">
+                                        <span id="ans3"></span>
+                                    </label>
                                     <label class="element-animation4 btn btn-lg btn-primary btn-block"><span class="btn-label"></span> 
-                                        <input type="radio" name="q_answer" value="4">4 Four</label>
-                                    <br>
+                                        <input type="radio" name="r-ans4" value="">
+                                        <span id="ans4"></span>
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="modal-footer text-muted"> 
-                                <span id="answer"></span>
                             </div>
                         </div>
                     </div>
                     <hr>
                 </div>
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-secondary" type="submit">FINISH</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary" type="submit">FINISH</a>                
+                    <button id="next" class="btn btn-primary" type="submit" style="display: none;">NEXT</button>
+
                 </div>
             </div>
         </div>
     </section>
 
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/review.js' %}"></script>
 {% endblock %}
