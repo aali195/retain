@@ -63,7 +63,7 @@ $('#next').on('click', function() {
         contentType: "application/json",
         data: JSON.stringify(jsonData),
         success: function(data) {
-            if (('#completed-count') != ('#collection-size')) {
+            if ($('#completed-count').html() != $('#collection-size').html()) {
                 location.reload();
             } else {
                 window.location.href = "/users/dashboard";
