@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 
+from usersettings.models import UserSettings
 User = get_user_model()
 
 def register_user(request):
@@ -31,4 +32,5 @@ def check_input(username, email, password, password2):
 def save_user(username, email, password, password2):
     user = User.objects.create_user(username=username, password=password, email=email)
     user.save()
+    UserSettings.objects.create(user=user)
     return 1
