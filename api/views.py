@@ -15,6 +15,8 @@ from .serializers import (
     UpdateReviewedSerializer
 )
 
+from .schedule import get_next_learn, get_next_review
+
 from collecs.models import Collection
 from statements.models import Statement
 from usersettings.models import UserSettings
@@ -100,13 +102,7 @@ class LearnStatementView(viewsets.ModelViewSet):
         return serializer_class
 
     def get_queryset(self):
-        user_settings = get_object_or_404(UserSettings, user=self.request.user)
-        subscription = get_object_or_404(Subscription, collection=user_settings.active_collection, user=self.request.user)
-        statements = Statement.objects.filter(collection=subscription.collection)
-        if statements.count() < 10:
-            raise PermissionDenied(detail="Collection has less than 10 statements.", code=403)
-        else:
-            return statements.order_by('id')[subscription.completed_count:subscription.completed_count+1]
+        return get_next_learn(self.request.user)
         
     def perform_create(self, serializer):
         serializer.is_valid(raise_exception=True)
@@ -125,36 +121,26 @@ class ReviewStatementView(viewsets.ModelViewSet):
         return serializer_class
 
     def list(self, request, *args, **kwargs):
+        active_progress = get_next_review(self.request.user)
+
         user_settings = get_object_or_404(UserSettings, user=self.request.user)
         active_statements = Statement.objects.filter(collection=user_settings.active_collection)
-        if active_statements.count() < 10:
-            raise PermissionDenied(detail="Collection has less than 10 statements.", code=403)
-        else:
-            user_collection_progress = Progress.objects.filter(user=self.request.user, statement__collection=user_settings.active_collection)
-            if user_collection_progress.count() < 4:
-                raise PermissionDenied(detail="Need to learn 4 statements before reviewing", code=403)
-            else:
-                active_progress = user_collection_progress.annotate(review_incorrect=F('review_total')-F('review_correct')).order_by('-review_incorrect')[0]
-                current_statement = get_object_or_404(active_statements, statement=active_progress.statement)
-                other_statements = active_statements.exclude(statement=current_statement).order_by('?')[:3]
-                
-                if current_statement.image:
-                    current_statement_image = current_statement.image.path
-                else:
-                    current_statement_image = 'N/A'
+        current_statement = get_object_or_404(active_statements, statement=active_progress.statement)
+            
+        other_statements = active_statements.exclude(statement=current_statement).order_by('?')[:3]
 
-                return Response({
-                    'progress_id': active_progress.id,
-                    'statement_id': current_statement.id,
-                    'image': current_statement_image,
-                    'statement': current_statement.statement,
-                    'question': current_statement.question,
-                    'answer': current_statement.answer,
-                    'note': active_progress.note,
-                    'wrong_answer_1': other_statements[0].answer,
-                    'wrong_answer_2': other_statements[1].answer,
-                    'wrong_answer_3': other_statements[2].answer,
-                })
+        return Response({
+            'progress_id': active_progress.id,
+            'statement_id': current_statement.id,
+            'image': current_statement.image.path,
+            'statement': current_statement.statement,
+            'question': current_statement.question,
+            'answer': current_statement.answer,
+            'note': active_progress.note,
+            'wrong_answer_1': other_statements[0].answer,
+            'wrong_answer_2': other_statements[1].answer,
+            'wrong_answer_3': other_statements[2].answer,
+        })
 
     def perform_create(self, serializer):
         serializer.is_valid(raise_exception=True)

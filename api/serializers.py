@@ -2,8 +2,9 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 from django.db.models import F
 from django.shortcuts import get_object_or_404
-
 from datetime import datetime
+
+from .schedule import get_next_learn, save_learn_result, get_next_review, save_review_result
 
 from collecs.models import Collection
 from statements.models import Statement
@@ -117,19 +118,17 @@ class UpdateLearnedSerializer(serializers.Serializer):
 
         if statement.collection != user_settings.active_collection:
             raise serializers.ValidationError("Statement collection is not active")
+        elif Progress.objects.filter(user=self.context['request'].user, statement=statement).exists():
+            raise serializers.ValidationError("Statement has already been learned")
+        elif get_next_learn(self.context['request'].user)[0] != statement:
+            print(get_next_learn(self.context['request'].user))
+            print(statement)
+            raise serializers.ValidationError("Statement is not next to be learned")
         else:
-            if not Progress.objects.filter(user=self.context['request'].user, statement=statement).exists():
-                return data
-            else:
-                raise serializers.ValidationError("Statement has already been learned")
-
+            return data
 
     def create(self, validated_data):
-        statement = get_object_or_404(Statement, pk=validated_data['statement_id'])
-        subscription = get_object_or_404(Subscription, user=self.context['request'].user, collection=statement.collection)
-        subscription.completed_count += 1
-        subscription.save()
-        return Progress.objects.create(user=self.context['request'].user, statement=statement, note=validated_data['note'])
+        return save_learn_result(self.context['request'].user, validated_data['statement_id'], validated_data['note'])
 
 
 class UpdateReviewedSerializer(serializers.Serializer):
@@ -147,26 +146,12 @@ class UpdateReviewedSerializer(serializers.Serializer):
             if not Progress.objects.filter(user=self.context['request'].user, statement=statement).exists():
                 raise serializers.ValidationError("Statement has not been learned")
             else:
-                active_progress = Progress.objects.filter(user=self.context['request'].user, statement__collection=user_settings.active_collection).annotate(review_incorrect=F('review_total')-F('review_correct')).order_by('-review_incorrect')[0]
+                active_progress = get_next_review(self.context['request'].user)
                 active_statements = Statement.objects.filter(collection=user_settings.active_collection)
                 
                 current_statement = get_object_or_404(active_statements, statement=active_progress.statement)
                 if current_statement != statement:
                     raise serializers.ValidationError("Incorrect statement ordering")
                 else:
-                    
-                    progress = get_object_or_404(Progress, user=self.context['request'].user, statement=statement)
-                    progress.update_date = datetime.now()
-                    progress.review_total += 1
-
-                    if data['is_correct']:
-                        progress.review_correct += 1
-                        
-                    progress.save()
-
-                    subscription = get_object_or_404(Subscription, user=self.context['request'].user, collection=statement.collection)
-                    subscription.last_reviewed = datetime.now()
-                    subscription.save()
-
-
+                    save_review_result(self.context['request'].user, current_statement, data['is_correct'])
                     return data
