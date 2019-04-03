@@ -129,10 +129,17 @@ class ReviewStatementView(viewsets.ModelViewSet):
             
         other_statements = active_statements.exclude(statement=current_statement).order_by('?')[:3]
 
+        if current_statement.image:
+            current_statement_image = current_statement.image.url
+        else:
+            current_statement_image = ''
+
+        print(current_statement_image)
+
         return Response({
             'progress_id': active_progress.id,
             'statement_id': current_statement.id,
-            'image': current_statement.image.path,
+            'image': current_statement_image,
             'statement': current_statement.statement,
             'question': current_statement.question,
             'answer': current_statement.answer,
