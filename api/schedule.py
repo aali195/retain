@@ -63,7 +63,7 @@ def save_review_result(user, current_statement, is_correct):
         if (progress.streak >= -6):
             progress.streak -= 1
 
-    variation = randint(-1, 0)
+    variation = randint(-2, 0)
     if (progress.priority + variation) in range(-50, 50):
         progress.priority += variation
     if (progress.priority - progress.streak) in range(-50, 50):
