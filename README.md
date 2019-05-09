@@ -4,6 +4,8 @@
 ## Introduction
 Created with extension support in mind, this is a project that I worked on for my final undergraduate year to help me get the hang of different web development technologies. As a fan of spaced repetition learning but as someone who is generally lazy, I decided to build a platform that allows for forcing the user to stick to revising what they learn and this is the outcome. 
 
+Will be deployed soon.
+
 ## Documentation
 - For getting started information, see https://github.com/aali195/retain/wiki/Getting-Started
 
@@ -11,8 +13,13 @@ Created with extension support in mind, this is a project that I worked on for m
 
 - For the maintainer's guide, see https://github.com/aali195/retain/wiki/Maintainer's-Guide
 
+## Running Locally
+- Clone the repo and install the dependencies using pipenv
+
+- Run the Django server and check port 8000 for the homepage
+
 ## Acknowledgements
-WIP
+- The University of Liverpool, for allowing me to go ahead with this project https://www.liverpool.ac.uk/computer-science/
 
 ## License
-WIP
+![GNU GPL](https://github.com/aali195/retain/blob/master/LICENSE)
