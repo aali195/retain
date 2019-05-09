@@ -16,6 +16,10 @@ Will be deployed soon.
 ## Running Locally
 - Clone the repo and install the dependencies using pipenv
 
+- Install and setup PostgreSQL to work with Django
+
+- Generate a Django secret key and setup base directory
+
 - Run the Django server and check port 8000 for the homepage
 
 ## Acknowledgements
